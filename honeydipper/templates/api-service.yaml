@@ -1,0 +1,34 @@
+{{- if or (has "api" .Values.daemon.args) (not .Values.daemon.args) -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "honeydipper.fullname" . }}-api
+  {{- with .Values.daemon.namespace.name }}
+  {{- if ne . "default" }}
+  namespace: {{ . }}
+  {{- end }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ include "honeydipper.name" . }}
+    helm.sh/chart: {{ include "honeydipper.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  {{- with .Values.services.api.service.annotations }}
+  annotations: {{ . | toJson }}
+  {{- end }}
+spec:
+  {{- with .Values.services.api.service }}
+  type: {{ .type }}
+  ports:
+    - port: {{ .port }}
+      targetPort: {{ default .port .targetPort }}
+      {{- if .nodePort }}
+      nodePort: {{ .nodePort }}
+      {{- end }}
+      protocol: TCP
+      name: api
+  {{- end }}
+  selector:
+    app.kubernetes.io/name: {{ include "honeydipper.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end -}}
