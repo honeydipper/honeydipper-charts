@@ -72,6 +72,39 @@ daemon:
   # namespace defines where to deploy the assets
   namespace: {}
 
+# services describe the settings for honeydipper services
+services:
+  # api contains the settings for the api service
+  api:
+    service:
+      # type is the type of kubernetes service for the webhook
+      type: LoadBalancer
+      port: 9000
+      targetPort: 0
+      nodePort: 0
+
+      # annotations are the annotations for the service
+      annotations: {}
+
+    # ingress controller settings
+    ingress:
+      # enabled is used for creating an ingress kubernetes resouce
+      enabled: false
+      # annotations are the annotations for the  ingress resource
+      annotations: {}
+        # kubernetes.io/ingress.class: nginx
+        # kubernetes.io/tls-acme: "true"
+      # path specify the path of the ingress
+      path: /
+      # hosts specify the hosts of the ingress
+      hosts:
+        - chart-example-api.local
+      # tls is used for specifying the ssl cert using secret
+      tls: []
+      #  - secretName: chart-example-tls
+      #    hosts:
+      #      - chart-example.local
+
 # drivers containers the settings for the drivers
 drivers:
   # redis settings for the redis related drivers
