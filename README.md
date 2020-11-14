@@ -8,6 +8,6 @@ Please refer to the [LICENSE](LICENSE) and [CODE\_OF\_CONDUCT](CODE_OF_CONDUCT.m
 To add the repo, please run following command
 
 ```
-helm repo add honeydipper https://raw.githubusercontent.com/honeydipper/honeydipper-charts/master/
+helm repo add honeydipper https://raw.githubusercontent.com/honeydipper/honeydipper-charts/main/
 helm repo update
 ```
