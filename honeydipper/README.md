@@ -58,7 +58,7 @@ The following options are supported . See [values.yaml](./values.yaml) for more 
 Using command line:
 
 ```helm
-helm -f values.yaml install --name test incubator/honeydipper
+helm -f values.yaml install --name test honeydipper/honeydipper
 ```
 
 In values file
@@ -97,12 +97,12 @@ daemon:
 
 ## Testing the Deployment
 
-To perform a sanity test (i.e. ensure Honeydipper daemon is running, and when you curl the webhook url `http(s)://your-service-url/health`, you should get a `200` response code.)
+To perform a sanity test (i.e. ensure Honeydipper daemon is running, and when you curl the webhook url `http(s)://your-service-url/hz/alive`, you should get a `200` response code.)
 
  1. Install the chart
 
 ```bash
-helm install -f test-values.yaml --name trial incubator/honeydipper --debug
+helm install -f test-values.yaml --name trial honeydipper/honeydipper --debug
 ```
 
  2. Run the tests
