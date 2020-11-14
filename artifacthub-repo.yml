@@ -1,5 +1,4 @@
-# Artifact Hub repository metadata file
-# repositoryID: The ID of the Artifact Hub repository where the packages will be published to (optional, but it enables verified publisher)
-owners: # (optional, used to claim repository ownership)
+repositoryID: e0ca6526-0022-41bf-a548-37d610ae64c0
+owners:
   - name: Chun Huang(Charles)
     email: huangc.cd@gmail.com
