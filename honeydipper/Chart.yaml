@@ -1,5 +1,4 @@
 apiVersion: v1
-appVersion: 2.1.2
 description: An event driven orchestration system
 name: honeydipper
 version: 0.1.7

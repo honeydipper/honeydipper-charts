@@ -43,7 +43,7 @@ spec:
           image: "{{ .Values.drivers.redis.image.repository }}:{{ .Values.drivers.redis.image.tag }}"
         {{- end }}
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.daemon.image.repository }}:{{ default .Chart.AppVersion .Values.daemon.image.tag }}"
+          image: '{{ .Values.daemon.image.repository }}:{{ required ".Values.daemon.image.tag is required." .Values.daemon.image.tag }}'
           imagePullPolicy: {{ .Values.daemon.image.pullPolicy }}
           {{- with .Values.daemon.args }}
           args:
