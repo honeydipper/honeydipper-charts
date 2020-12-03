@@ -64,6 +64,9 @@ spec:
           ports:
             - name: webhook
               containerPort: {{ .Values.drivers.webhook.service.port }}
+            {{- with .Values.daemon.additionalPorts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           readinessProbe:
             httpGet:
               path: /hz/alive
