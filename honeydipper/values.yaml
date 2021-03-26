@@ -33,6 +33,9 @@ daemon:
   # additionalSidecars is a list of additional containers to add to the daemon
   additionalSidecars: []
 
+  # initContainers is a list of containers to run before the daemon starts
+  initContainers: []
+
   # resources specifies the resource limitation for the daemon container
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
