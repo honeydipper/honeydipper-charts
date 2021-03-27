@@ -2,6 +2,27 @@ apiVersion: v1
 entries:
   honeydipper:
   - apiVersion: v1
+    appVersion: 2.3.0
+    created: "2021-03-26T17:27:23.93039-07:00"
+    description: An event driven orchestration system
+    digest: 9baa823d3e82fb6750b3df4bc40931f8576aebfb5e4d5e258b8511d55c3ea974
+    home: https://honeydipper.io
+    icon: https://raw.githubusercontent.com/honeydipper/honeydipper/master/logo/log_medium.png
+    keywords:
+    - event-driven
+    - orchestration
+    - integration
+    - workflows
+    - templating
+    maintainers:
+    - email: Charles546@users.noreply.github.com
+      name: Charles546
+      url: https://honeydipper.io
+    name: honeydipper
+    urls:
+    - honeydipper-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v1
     appVersion: 2.1.2
     created: "2020-11-14T11:21:24.591143-08:00"
     description: An event driven orchestration system

@@ -34,6 +34,14 @@ spec:
       {{- with .Values.daemon.serviceAccountName }}
       serviceAccountName: "{{ . }}"
       {{- end }}
+      initContainers:
+        {{- with .Values.daemon.initContainers }}
+        {{- range . }}
+        {{- $ic := default (list) .env | concat (default (list) $.Values.daemon.env) | set . "env" }}
+        {{- $_ := default (list) .volumeMounts | concat (default (list) $.Values.daemon.extraVolumeMounts) | set $ic "volumeMounts" }}
+        - {{- toYaml $ic | nindent 10 }}
+        {{- end }}
+        {{- end }}
       containers:
         {{- with .Values.daemon.additionalSidecars }}
         {{- toYaml . | nindent 8 }}
