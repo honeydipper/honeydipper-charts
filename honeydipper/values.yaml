@@ -58,8 +58,11 @@ daemon:
   # tolerations is used in the daemon pod speicification
   affinity: {}
 
-  # annotations are the annotations for the daemon
+  # annotations are the annotations for the daemon deployment
   annotations: {}
+
+  # pod_annotations are the annotations for the daemon pods
+  pod_annotations: {}
 
   # env is a list of environment variables for the daemon container
   env:
