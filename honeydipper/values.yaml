@@ -121,7 +121,7 @@ drivers:
       # when using local redis sidecar container specify the name of the image repository
       repository: redis
       # when using local redis sidecar container specify the tag of the image
-      tag: 5
+      tag: 7
   # webhook settings for the webhook driver
   webhook:
     # service specifies how the webhook driver service is exposed
