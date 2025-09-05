@@ -78,6 +78,9 @@ daemon:
   # namespace defines where to deploy the assets
   namespace: {}
 
+  # priorityClassName defines the priority class for the daemon pods
+  priorityClassName: ''
+
 # services describe the settings for honeydipper services
 services:
   # api contains the settings for the api service
