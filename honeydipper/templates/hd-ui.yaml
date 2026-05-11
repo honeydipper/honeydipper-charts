@@ -1,0 +1,136 @@
+{{- if .Values.hdUI.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "honeydipper.fullname" . }}-ui
+  {{- with .Values.daemon.namespace.name }}
+  {{- if ne . "default" }}
+  namespace: {{ . }}
+  {{- end }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ include "honeydipper.name" . }}
+    helm.sh/chart: {{ include "honeydipper.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: ui
+  {{- with .Values.hdUI.annotations }}
+  annotations: {{ . | toJson }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.hdUI.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "honeydipper.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: ui
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "honeydipper.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: ui
+      {{- with .Values.hdUI.pod_annotations }}
+      annotations: {{ . | toJson }}
+      {{- end }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-ui
+          image: "{{ .Values.hdUI.image.repository }}:{{ .Values.hdUI.image.tag }}"
+          imagePullPolicy: {{ .Values.hdUI.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ default .Values.hdUI.service.port .Values.hdUI.service.targetPort }}
+              protocol: TCP
+          env:
+            - name: HD_API_URL
+              value: http://{{ include "honeydipper.fullname" . }}-api:{{ .Values.services.api.service.port }}
+          {{- with .Values.hdUI.env }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.hdUI.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.hdUI.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.hdUI.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.hdUI.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "honeydipper.fullname" . }}-ui
+  {{- with .Values.daemon.namespace.name }}
+  {{- if ne . "default" }}
+  namespace: {{ . }}
+  {{- end }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ include "honeydipper.name" . }}
+    helm.sh/chart: {{ include "honeydipper.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: ui
+  {{- with .Values.hdUI.service.annotations }}
+  annotations: {{ . | toJson }}
+  {{- end }}
+spec:
+  type: {{ .Values.hdUI.service.type }}
+  ports:
+    - port: {{ .Values.hdUI.service.port }}
+      targetPort: {{ default .Values.hdUI.service.port .Values.hdUI.service.targetPort }}
+      {{- if .Values.hdUI.service.nodePort }}
+      nodePort: {{ .Values.hdUI.service.nodePort }}
+      {{- end }}
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "honeydipper.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: ui
+{{- if .Values.hdUI.ingress.enabled }}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ include "honeydipper.fullname" . }}-ui
+  {{- with .Values.daemon.namespace.name }}
+  {{- if ne . "default" }}
+  namespace: {{ . }}
+  {{- end }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ include "honeydipper.name" . }}
+    helm.sh/chart: {{ include "honeydipper.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: ui
+  {{- with .Values.hdUI.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.hdUI.ingress.tls }}
+  tls:
+    {{- range .Values.hdUI.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  backend:
+    serviceName: {{ include "honeydipper.fullname" . }}-ui
+    servicePort: {{ .Values.hdUI.service.port }}
+{{- end }}
+{{- end -}}

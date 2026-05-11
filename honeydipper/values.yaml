@@ -86,6 +86,9 @@ daemon:
   extraVolumes: []
 
   # namespace defines where to deploy the assets
+  # name: the namespace to deploy into, chart creates it unless use_existing is set
+  # labels: a list of k/v pairs to attach to the namespace as labels
+  # use_existing: set to true to use a namespace that already exists instead of creating one
   namespace: {}
 
   # priorityClassName defines the priority class for the daemon pods
@@ -123,6 +126,58 @@ services:
       #  - secretName: chart-example-tls
       #    hosts:
       #      - chart-example.local
+
+# hdUI contains optional deployment settings for Honeydipper UI
+hdUI:
+  # enabled controls whether to deploy hd-ui resources
+  enabled: false
+
+  # replicaCount specifies how many ui replicas should be running
+  replicaCount: 1
+
+  # image specifies what image to use for the ui container
+  image:
+    repository: honeydipper/hd-ui
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  # service describes how to expose the ui in kubernetes
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8080
+    nodePort: 0
+    annotations: {}
+
+  # ingress controller settings
+  ingress:
+    enabled: false
+    annotations: {}
+    path: /
+    hosts:
+      - chart-example-ui.local
+    tls: []
+
+  # resources specifies the resource limitation for the ui container
+  resources: {}
+
+  # nodeSelector is used for specifying what nodes to place ui pods on
+  nodeSelector: {}
+
+  # tolerations is used in the ui pod specification
+  tolerations: []
+
+  # affinity is used in the ui pod specification
+  affinity: {}
+
+  # annotations are the annotations for the ui deployment
+  annotations: {}
+
+  # pod_annotations are the annotations for the ui pods
+  pod_annotations: {}
+
+  # env is a list of environment variables for the ui container
+  env: []
 
 # drivers containers the settings for the drivers
 drivers:

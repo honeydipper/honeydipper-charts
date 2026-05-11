@@ -12,6 +12,7 @@ metadata:
     helm.sh/chart: {{ include "honeydipper.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: daemon
   {{- with .Values.daemon.annotations }}
   annotations: {{ . | toJson }}
   {{- end }}
@@ -26,6 +27,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "honeydipper.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: daemon
       {{- with .Values.daemon.pod_annotations }}
       annotations: {{ . | toJson }}
       {{- end }}
