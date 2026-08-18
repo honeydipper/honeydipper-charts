@@ -54,6 +54,13 @@ daemon:
 
   # topologySpreadConstraints controls how daemon pods are distributed across failure domains
   topologySpreadConstraints: []
+    # - maxSkew: 1
+    #   topologyKey: topology.kubernetes.io/zone
+    #   whenUnsatisfiable: DoNotSchedule
+    #   labelSelector:
+    #     matchLabels:
+    #       app.kubernetes.io/name: honeydipper
+    #       app.kubernetes.io/instance: <release-name>
 
   # tolerations is used in the daemon pod speicification
   tolerations: []

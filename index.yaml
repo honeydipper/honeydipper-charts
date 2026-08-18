@@ -5,7 +5,7 @@ entries:
     appVersion: '>=3.9.1'
     created: "2026-08-18T14:45:01.717379-07:00"
     description: An event driven orchestration system
-    digest: c25e37351e8588528e899cf3c8abd206756ac25b5838699cd4d7543a564f8ff8
+    digest: b59b1f92571cf35b922fa26cb55caf68cc64231f0c598b60d937e70533543339
     home: https://honeydipper.io
     icon: https://raw.githubusercontent.com/honeydipper/honeydipper/master/logo/log_medium.png
     keywords:
