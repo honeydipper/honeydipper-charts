@@ -33,6 +33,7 @@ The following options are supported . See [values.yaml](./values.yaml) for more 
 | daemon.args | Honeydipper daemon args, should be a list of Honeydipper daemon services, empty means all | |
 | daemon.resources | The pod resource spec, cpu limit, memory limit, etc., as defined in a pod spec | |
 | daemon.nodeSelector | A map of node selectors for the pod, as defined in a pod spec | |
+| daemon.topologySpreadConstraints | A list of topology spread constraints for daemon pods, as defined in a pod spec | `[]` |
 | daemon.affinity | A map of affinity settings for the pod, as defined in a pod spec | |
 | daemon.annotations | A map of annotations as defined in a deployment metadata | |
 | daemon.tolerations | A list of toleration settings for the pod, as defined in a pod spec | |
