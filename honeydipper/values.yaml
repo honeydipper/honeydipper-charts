@@ -52,6 +52,9 @@ daemon:
   # nodeSelector is used for specifying what nodes to place the daemon containers on
   nodeSelector: {}
 
+  # topologySpreadConstraints controls how daemon pods are distributed across failure domains
+  topologySpreadConstraints: []
+
   # tolerations is used in the daemon pod speicification
   tolerations: []
 
