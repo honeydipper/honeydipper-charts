@@ -42,6 +42,13 @@ The following options are supported . See [values.yaml](./values.yaml) for more 
 | daemon.env | A list of environment variables to be added to the main daemon container | |
 | daemon.namespace.name | create a namespace if this defined and not default | |
 | daemon.namespace.labels | a list of k/v pair to attach to the namespace as labels | |
+| daemon.namespace.use_existing | set to true to use a namespace that already exists instead of creating one | `false` |
+| hdUI.enabled | Enable deployment of Honeydipper UI resources (Deployment/Service/Ingress) | `false` |
+| hdUI.image.repository | The docker image for Honeydipper UI | `honeydipper/hd-ui` |
+| hdUI.image.tag | The version tag of the UI image to use | `latest` |
+| hdUI.service.type | The exposed service type for the UI | `ClusterIP` |
+| hdUI.service.port | The exposed service port for the UI | `80` |
+| hdUI.ingress.enabled | Use ingress controller for the UI service | `false` |
 | drivers.webhook.service.type | The exposed service type for the webhook | `LoadBalancer` |
 | drivers.webhook.service.port | The exposed service port for the webhook, needs to match the driver configurations set in the configuration repo | 8080 |
 | drivers.webhook.service.nodePort | The exposed service node port for the webhook. If set to 0, Kubernetes will assign a random port. | 0 |

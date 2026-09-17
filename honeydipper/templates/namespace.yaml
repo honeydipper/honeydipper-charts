@@ -1,5 +1,5 @@
 {{- with .Values.daemon.namespace }}
-{{- if ne .name "default" }}
+{{- if and (ne .name "default") (empty .use_existing) }}
 ---
 apiVersion: v1
 kind: Namespace

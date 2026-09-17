@@ -13,6 +13,7 @@ metadata:
     helm.sh/chart: {{ include "honeydipper.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: webhook-service
   {{- with .Values.drivers.webhook.service.annotations }}
   annotations: {{ . | toJson }}
   {{- end }}
@@ -29,4 +30,5 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "honeydipper.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: daemon
 {{- end -}}
