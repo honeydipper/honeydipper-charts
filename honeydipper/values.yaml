@@ -18,6 +18,22 @@ daemon:
   # replicaCount specifies how many replica daemon should be running
   replicaCount: 1
 
+  # strategy specifies the deployment update strategy for the daemon, defaults to the kubernetes default when empty
+  strategy: {}
+    # type: RollingUpdate
+    # rollingUpdate:
+    #   maxSurge: 1
+    #   maxUnavailable: 0
+
+  # podDisruptionBudget limits voluntary disruptions (node drains, upgrades) of the daemon pods
+  podDisruptionBudget:
+    # enabled controls whether to create a PodDisruptionBudget for the daemon
+    enabled: false
+    # minAvailable is the number or percentage of pods that must stay available, ignored if maxUnavailable is set
+    minAvailable: 1
+    # maxUnavailable is the number or percentage of pods that can be unavailable, takes precedence over minAvailable
+    # maxUnavailable: 1
+
   # image specifies what image to use to start the daemon
   image:
     # repository is the image repository for the daemon container

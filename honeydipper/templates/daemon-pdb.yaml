@@ -1,0 +1,27 @@
+{{- if .Values.daemon.podDisruptionBudget.enabled }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "honeydipper.fullname" . }}
+  {{- with .Values.daemon.namespace.name }}
+  {{- if ne . "default" }}
+  namespace: {{ . }}
+  {{- end }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ include "honeydipper.name" . }}
+    helm.sh/chart: {{ include "honeydipper.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: daemon
+spec:
+  {{- if not (kindIs "invalid" .Values.daemon.podDisruptionBudget.maxUnavailable) }}
+  maxUnavailable: {{ .Values.daemon.podDisruptionBudget.maxUnavailable }}
+  {{- else }}
+  minAvailable: {{ .Values.daemon.podDisruptionBudget.minAvailable }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "honeydipper.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
